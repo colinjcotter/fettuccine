@@ -1,0 +1,192 @@
+\documentclass{article}
+\usepackage[nosumlimits]{amsmath}
+\usepackage{amssymb,amsthm,MnSymbol}
+\def\MM#1{\boldsymbol{#1}}
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}} 
+\newcommand{\dede}[2]{\frac{\delta #1}{\delta #2}}
+\newcommand{\dd}[2]{\frac{\diff#1}{\diff#2}}
+\newcommand{\dt}[1]{\diff\!#1}
+\def\MM#1{\boldsymbol{#1}}
+\DeclareMathOperator{\diff}{d}
+\DeclareMathOperator{\DIV}{DIV}
+\DeclareMathOperator{\D}{D}
+\usepackage{amscd}
+\usepackage{natbib}
+\bibliographystyle{elsarticle-harv}
+\usepackage{helvet}
+\usepackage{amsfonts}
+\renewcommand{\familydefault}{\sfdefault} %% Only if the base font of the docume
+\newcommand{\vecx}[1]{\MM{#1}}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newcommand{\code}[1]{{\ttfamily #1}} 
+\usepackage[margin=2cm]{geometry}
+\newcommand{\jump}[1]{\left[\!\!\left[ #1 \right]\!\!\right]}
+
+\usepackage{fancybox}
+\begin{document}
+\title{Notes on isometric ribbons/fettuccine}
+\author{All of Us}
+\maketitle
+
+We describe the motion of a thin strip of fettuccine, parameterised
+along the centre line by arc-length parameter $s\in [0,1]$.  The
+fettuccine is described by the unit tangent vector $\MM{t}:[0,1]\to
+\mathbb{R}^3$, the cotangent $\MM{b}:[0,1]\to \mathbb{R}^3$, and the
+normal vector $\MM{n}:[0,1]\to \mathbb{R}^3$, with
+$\MM{b}\times\MM{t}=\MM{n}$. Given a rotation vector
+$\MM{\omega}:[0,1]\to \mathbb{R}^3$, we define ``dynamics'' for
+$\MM{b}$ and $\MM{t}$ by
+\begin{equation}
+  \dot{\MM{b}} = \MM{\omega}\times\MM{b}, \quad
+  \dot{\MM{t}} = \MM{\omega}\times\MM{t}.
+\end{equation}
+We wish to exclude rotation around $\MM{n}$ (since this is not an
+isometry of the fettuccine), so we parameterise
+\begin{equation}
+  \MM{\omega}(s) = \alpha(s)\MM{b}(s) + \beta(s)\MM{t}(s).
+\end{equation}
+Viewed from a different angle, this sets a non-holonomic constraint on
+$\dot{\MM{b}}$ and $\dot{\MM{t}}$, but using this parameterisation
+returns us to a standard variational setting.
+
+Finally, we want to find the location of the centre line, which is
+described by $\MM{q}:[0,1]\to \mathbb{R}^3$, which satisfies
+\begin{equation}
+  \dot{\MM{q}} = \MM{t}.
+\end{equation}
+
+In general, we consider an energy function
+$F[\alpha,\beta;s]$. The curvature functional given to me by Edmund is
+\begin{equation}
+  \int_0^1 \frac{(\kappa^2 + \tau^2)^2}{\kappa^2}\diff s,
+\end{equation}
+where
+\begin{align}
+  \kappa^2 & = \|\dot{\MM{t}}\|^2 := \alpha^2, \\
+  \tau^2 & = \|\dot{\MM{n}}\|^2 := \alpha^2 + \beta^2.
+\end{align}
+It seems like a good idea to change variables $(\alpha,\beta)\to
+(\alpha,\gamma)$ by $\beta=\alpha\gamma$
+to remove the singularity in this functional. So, we'll consider
+an energy functional $F[\alpha,\gamma;s]$ with the specific example
+\begin{equation}
+  F = \alpha^2(2+\gamma^2),
+\end{equation}
+which has partial derivatives
+\begin{equation}
+  \pp{F}{a} = 2\alpha(2+\gamma^2), \quad \pp{F}{\gamma} = 2\gamma\alpha^2.
+\end{equation}
+
+Now we are ready to set up the optimisation problem.
+\begin{equation}
+  \min_{\alpha,\gamma,\MM{t},\MM{b},\MM{q}}F(\alpha,\gamma),
+\end{equation}
+subject to the \emph{dynamical constraints},
+\begin{align}
+  \dot{\MM{t}} &= \alpha\MM{b}\times \MM{t}, \\
+  \dot{\MM{b}} & = \alpha\gamma\MM{t}\times \MM{b}, \\
+  \dot{\MM{q}} & = \MM{t},
+\end{align}
+and the endpoint conditions
+\begin{equation}
+  \MM{q}(0)=\MM{q}_0, \quad
+  \MM{q}(1)=\MM{q}_1, \quad
+  \MM{t}(0)=\MM{t}_0, \quad
+  \MM{t}(1)=\MM{t}_1, \quad
+  \MM{b}(0)=\MM{b}_0, \quad
+  \MM{b}(1)=\MM{b}_1.
+\end{equation}
+
+Introducing Lagrange multipliers $\MM{\lambda}:[0,1]\to\mathbb{R}^3$,
+$\MM{\mu}:[0,1]\to\mathbb{R}^3$, $\MM{p}:[0,1]\to \mathbb{R}^3$,
+the minimising functions are stationary points of the action
+\begin{equation}
+  S = \int_0^1 F + \MM{\lambda}\cdot\left(\dot{\MM{t}}-\alpha\MM{b}\times\MM{t}
+  \right)
+  + \MM{\mu}\cdot\left(\dot{\MM{b}}-\alpha\gamma\MM{t}\times\MM{b}\right)
+  + \MM{p}\cdot\left(\dot{\MM{q}}-\MM{t}\right)\diff s.
+\end{equation}
+From this we get the weak equations of motion [integrating by parts in
+  some of the equations and dropping boundary terms due to variations
+in $\MM{t}$, $\MM{b}$, $\MM{x}$ being zero at the endpoints]
+\begin{align}
+  \int_0^1 \delta \MM{\lambda}\cdot \left(\dot{\MM{t}}-\alpha\MM{b}\times\MM{t}
+  \right)\diff s & = 0, \quad \forall \delta\MM{\lambda}, \\
+  \int_0^1 \delta \MM{t} \cdot
+  \left( -\dot{\MM{\lambda}} - \alpha\MM{\lambda}\times \MM{b}
+  -\alpha\gamma \MM{b}\times\MM{\mu} - \MM{p}\right)\diff s & = 0,
+  \quad \forall \delta\MM{t}, \\
+  \int_0^1 \delta \MM{\mu}\cdot \left(\dot{\MM{b}}-\alpha\gamma\MM{t}\times\MM{b}
+  \right)\diff s & = 0, \quad \forall \delta\MM{\mu}, \\
+  \int_0^1 \delta \MM{b}\cdot \left(-\dot{\MM{\mu}}
+  -\alpha\MM{t}\times\MM{\lambda}
+  -\alpha\gamma\MM{\mu}\times\MM{t}
+  \right)\diff s & = 0, \quad \forall \delta\MM{b}, \\
+  \int_0^1 \delta \MM{p}\cdot \left(\dot{\MM{q}}-\MM{t}\right)\diff s &= 0,
+  \quad \forall \delta\MM{p}, \\
+  \int_0^1 -\delta\MM{q}\cdot \dot{\MM{p}}\diff s & = 0, \quad
+  \forall \delta \MM{q}, \\
+  \int_0^1 \delta\alpha\left(\pp{F}{\alpha}-\MM{\lambda}\cdot\MM{b}\times
+  \MM{t}\right)\diff s & = 0, \quad \forall \delta\alpha, \\
+  \int_0^1 \delta\gamma\left(\pp{F}{\gamma}-\alpha\MM{\mu}\cdot\MM{t}\times
+  \MM{b}\right)\diff s & = 0, \quad \forall \delta\gamma,
+\end{align}
+subject to the boundary conditions above. This system of equations
+could then be solved by Newton iteration (probably needs continuation
+method on boundary conditions).
+
+Towards a finite element discretisation, we return to $S$ and integrate
+by parts to move the time derivatives on $\MM{t}$ and $\MM{b}$ onto
+$\lambda$ and $\mu$. The action becomes
+\begin{equation}
+  S = \int_0^1 F - \dot{\MM{\lambda}}\cdot\MM{t}
+  -\MM{\lambda}\cdot\alpha\MM{b}\times\MM{t}
+  - \dot{\MM{\mu}}\cdot\MM{b}
+  -\MM{\mu}\cdot\alpha\gamma\MM{t}\times\MM{b}
+  + \MM{p}\cdot\left(\dot{\MM{q}}-\MM{t}\right)\diff s
+  + \left[\MM{\lambda}\cdot\MM{t}^* + \MM{\mu}\cdot\MM{b}^*
+    \right]_0^1,
+\end{equation}
+where $\MM{t}^*$ and $\MM{b}^*$ are the (fixed) boundary values. We
+then select $\MM{q},\MM{\lambda},\MM{\mu}\in H^1([0,1];\mathbb{R}^3)$,
+$\MM{b},\MM{t}\in L^2([0,1];\mathbb{R}^3)$, $\alpha,\gamma\in
+L^2([0,1];\mathbb{R})$, leading to the variational formulation,
+\begin{align}
+  \int_0^1 \delta \dot{\MM{\lambda}}\cdot\MM{t}
+  +\delta\MM{\lambda}\cdot\alpha\MM{b}\times\MM{t}
+  \diff s -
+  \left[
+    \MM{\lambda}\cdot \MM{t}^*
+    \right]_0^1
+  & = 0, \quad \forall \delta\MM{\lambda} \in
+  \mathring{H}^1([0,1];\mathbb{R}^3), \\
+  \int_0^1 \delta \MM{t} \cdot
+  \left(\dot{\MM{\lambda}} + \alpha\MM{\lambda}\times \MM{b}
+  +\alpha\gamma \MM{b}\times\MM{\mu} + \MM{p}\right)\diff s & = 0,
+  \quad \forall \delta\MM{t} \in L^2([0,1];\mathbb{R}^3), \\
+  \int_0^1 \delta \dot{\MM{\mu}}\cdot{\MM{b}}
+  +\MM{\mu}\cdot\alpha\gamma\MM{t}\times\MM{b}
+  \diff s - \left[\MM{\mu}\cdot\MM{b}^*
+    \right]& = 0, \quad \forall \delta\MM{\mu} \in
+  H^1([0,1];\mathbb{R}^3), \\
+  \int_0^1 \delta \MM{b}\cdot \left(\dot{\MM{\mu}}
+  +\alpha\MM{t}\times\MM{\lambda}
+  +\alpha\gamma\MM{\mu}\times\MM{t}
+  \right)\diff s & = 0, \quad \forall \delta\MM{b}\in L^2([0,1];\mathbb{R}^3), \\
+  \int_0^1 \delta \MM{p}\cdot \left(\dot{\MM{q}}-\MM{t}\right)\diff s &= 0,
+  \quad \forall \delta\MM{p}\in L^2([0,1];\mathbb{R}^3), \\
+  \int_0^1 \delta\dot{\MM{q}}\cdot{\MM{p}}\diff s & = 0, \quad
+  \forall \delta \MM{q} \in H^1([0,1];\mathbb{R}^3), \\
+  \int_0^1 \delta\alpha\left(\pp{F}{\alpha}-\MM{\lambda}\cdot\MM{b}\times
+  \MM{t}\right)\diff s & = 0, \quad \forall \delta\alpha\in L^2([0,1];
+  \mathbb{R}), \\
+  \int_0^1 \delta\gamma\left(\pp{F}{\gamma}-\alpha\MM{\mu}\cdot\MM{t}\times
+  \MM{b}\right)\diff s & = 0, \quad \forall \delta\gamma \in L^2([0,1];
+  \mathbb{R}),
+\end{align}
+subject to the boundary conditions $\MM{q}(0)=\MM{q}^*(0)$,
+$\MM{q}(1)=\MM{q}^*(1)$.
+
+\end{document}
